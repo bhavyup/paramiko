@@ -136,6 +136,7 @@ class PKey_:
             preamble = "This is a preamble\nAnother: preamble line\n"
             key = RSAKey.from_private_key(StringIO(preamble + pem))
             assert isinstance(key, RSAKey)
+
     class load_certificate:
         def rsa_public_cert_blobs(self):
             # Data to test signing with (arbitrary)
