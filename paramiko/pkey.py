@@ -146,9 +146,10 @@ class PKey:
     }
     _PRIVATE_KEY_FORMAT_ORIGINAL = 1
     _PRIVATE_KEY_FORMAT_OPENSSH = 2
-    # OpenSSH key type names (as embedded inside "BEGIN OPENSSH PRIVATE KEY" files)
-    # that this key class knows how to load. Subclasses override this with their own 
-    # type name(s); an empty tuple disables the check in _read_private_key_openssh.
+    # OpenSSH key type names embedded in "BEGIN OPENSSH PRIVATE KEY"
+    # files that this key class can load. Subclasses override with their
+    # own type name(s); an empty tuple disables the keytype check in
+    # _read_private_key_openssh.
     _expected_openssh_keytypes = ()
 
     BEGIN_TAG = re.compile(r"^-{5}BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-{5}\s*$")
@@ -750,9 +751,11 @@ class PKey:
                 "OpenSSH private key file checkints do not match"
             )
 
-        # The key type embedded in the file must match the key class being loaded.
-        # Without this, a wrong-type key file can silently mis-parse into garbage (see #2467).
-        # This mirrors the "encountered X key, expected Y key" check _read_private_key performs for PEM files.
+        # The key type embedded in the file must match the key class
+        # being loaded. Without this, a wrong-type key file can silently
+        # mis-parse into garbage (see #2467). This mirrors the
+        # "encountered X key, expected Y key" check _read_private_key
+        # performs for PEM files.
         keytype_name = keytype.decode("utf-8")
         expected = self._expected_openssh_keytypes
         if expected and keytype_name not in expected:

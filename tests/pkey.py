@@ -161,7 +161,6 @@ class PKey_:
                 ECDSAKey,
             )
 
-
     class load_certificate:
         def rsa_public_cert_blobs(self):
             # Data to test signing with (arbitrary)
